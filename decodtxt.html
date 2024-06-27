@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DecodText</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    
+</head>
+<body>
+    <header>
+        <img class="btn-animated" src="img/t.png" alt="">
+        <h1 style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Criptografia e Descriptografia</h1>
+    </header>
+    <main>
+        <div class="container">
+            <textarea class="btn-animated btn" id="inputText" placeholder="Digite o texto aqui..."></textarea>
+            <br>
+            <div></div>
+            <button class="btn btn-white btn-animated" onclick="criptografar()" style="background-color: blueviolet; color: black; border: none;">Criptografar</button>
+            <button class="btn btn-white btn-animated" onclick="descriptografar()" style="background-color: deeppink; color: black; border: none;">Descriptografar</button>
+            <button class="btn btn-white btn-animated" onclick="copiarTexto()" style="background-color: tomato; color: black; border: none;">Copiar Texto Criptografado</button>
+            <div id="result" class="result btn-animated" style="color: black;"></div>
+        </div>
+    </main>
+    <footer class="btn-animated">
+        Copyright 2024 © - Bruno Cruz™
+    </footer>
+
+    <script>
+        function criptografar() {
+            const inputText = document.getElementById('inputText').value;
+            const result = btoa(inputText);
+            document.getElementById('result').textContent = "Texto Criptografado: " + result;
+        }
+
+        function descriptografar() {
+            const inputText = document.getElementById('inputText').value;
+            try {
+                const result = atob(inputText);
+                document.getElementById('result').textContent = "Texto Descriptografado: " + result;
+            } catch (e) {
+                document.getElementById('result').textContent = "Texto inválido para descriptografia.";
+            }
+        }
+
+        function copiarTexto() {
+            const resultText = document.getElementById('result').textContent;
+            if (resultText.includes("Texto Criptografado: ")) {
+                const textoCriptografado = resultText.replace("Texto Criptografado: ", "");
+                navigator.clipboard.writeText(textoCriptografado).then(() => {
+                    alert("Texto copiado para a área de transferência!");
+                    document.getElementById('inputText').value = "";
+                    document.getElementById('result').textContent = "";
+                }, (err) => {
+                    console.error('Erro ao copiar texto: ', err);
+                });
+            } else {
+                alert("Não há texto criptografado para copiar.");
+            }
+        }
+    </script>
+</body>
+</html>
